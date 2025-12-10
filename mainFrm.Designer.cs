@@ -57,7 +57,7 @@
             // AdapterBx
             // 
             AdapterBx.DropDownStyle = ComboBoxStyle.DropDownList;
-            AdapterBx.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            AdapterBx.Font = new Font("Segoe UI", 9.75F);
             AdapterBx.FormattingEnabled = true;
             AdapterBx.Location = new Point(115, 12);
             AdapterBx.Name = "AdapterBx";
@@ -162,7 +162,7 @@
             MaximizeBox = false;
             Name = "MainFrm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "NetworkStatusMonitor.NET";
+            Text = "ItsBrank's Network Status Monitor";
             Load += MainFrm_Load;
             ResumeLayout(false);
         }
