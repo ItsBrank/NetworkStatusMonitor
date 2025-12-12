@@ -4,7 +4,7 @@
     <_LastSelectedProfileId>E:\Files\Visual Studio Projects\NetworkStatusMonitor\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="MainFrm.cs">
+    <Compile Update="Forms\MainFrm.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

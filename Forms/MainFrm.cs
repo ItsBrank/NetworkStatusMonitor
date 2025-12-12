@@ -1,4 +1,5 @@
 using System.Net.NetworkInformation;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using Windows.Networking.Connectivity;
 
@@ -87,7 +88,7 @@ namespace NetworkStatusMonitor
                     if (LogList.Items.Count > 0)
                     {
                         // If the interface was lost, we need to manually switch the connection type if it's changed.
-                        // If we don't do this and the user reconnects to a different interface, from lets say ethernet to wifi, it will report the wrong "disconnection type".
+                        // If we don't do this and the user reconnects to a different interface, from lets say ethernet to WiFi, it will report the wrong "disconnection type".
 
                         if ((m_currentStatus != StatusTypes.Unknown) && (currentStatus == "Disconnected/Offline"))
                         {
@@ -124,7 +125,7 @@ namespace NetworkStatusMonitor
             {
                 MonitorBtn.PerformClick();
                 RefreshAdapters();
-                MessageBox.Show("Error: Could not find the selected network interface, automatically refreshing list.", "NetworkStatusMonitor.NET", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: Could not find the selected network interface, automatically refreshing list.", Framework.Assembly.GetTitle(), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -137,7 +138,7 @@ namespace NetworkStatusMonitor
             {
                 if (adapter.Description == AdapterBx.Text)
                 {
-                    MessageBox.Show("The selected network adapters status is: \"" + adapter.OperationalStatus.ToString() + "\"", "NetworkStatusMonitor.NET", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("The selected network adapters status is: \"" + adapter.OperationalStatus.ToString() + "\"", Framework.Assembly.GetTitle(), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -146,7 +147,7 @@ namespace NetworkStatusMonitor
         {
             if (m_isMonitoring)
             {
-                this.Text = "NetworkStatusMonitor.NET";
+                this.Text = Framework.Assembly.GetTitle();
                 MonitorBtn.Text = "Start monitoring";
                 StatusTmr.Stop();
                 DurationTmr.Stop();
@@ -161,7 +162,7 @@ namespace NetworkStatusMonitor
             }
             else if (!String.IsNullOrEmpty(AdapterBx.Text))
             {
-                this.Text = "NetworkStatusMonitor.NET";
+                this.Text = Framework.Assembly.GetTitle();
                 MonitorBtn.Text = "Stop monitoring";
 
                 m_currentStatus = StatusTypes.Unknown;
@@ -174,7 +175,7 @@ namespace NetworkStatusMonitor
             }
             else
             {
-                MessageBox.Show("Warning: Please select the current network adapter you're using to get accurate results.", "NetworkStatusMonitor.NET", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Warning: Please select the current network adapter you're using to get accurate results.", Framework.Assembly.GetTitle(), MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -200,8 +201,6 @@ namespace NetworkStatusMonitor
                 fileName = fileName.Replace(":", "");
                 fileName = fileName.Replace(" ", "_");
 
-                // Promps the folder picker dialog.
-
                 FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
                 DialogResult folderResult = folderBrowser.ShowDialog();
 
@@ -216,7 +215,7 @@ namespace NetworkStatusMonitor
                         sw.WriteLine(saveData);
                     }
 
-                    MessageBox.Show("Sucessfully saved log to: \n" + logPath, "Network Status Monitor", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Successfully saved log to: \n" + logPath, "Network Status Monitor", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -251,14 +250,14 @@ namespace NetworkStatusMonitor
             }
         }
 
-        // Manages both TimeSpans and upate the forms text/title, as well as update the active duration in "LogList".
+        // Manages both TimeSpans and updates the forms text/title, as well as update the active duration in "LogList".
         private void DurationTmr_Tick(object sender, EventArgs e)
         {
             if (m_isMonitoring)
             {
                 m_monitorTime = m_monitorTime.Add(TimeSpan.FromMilliseconds(100));
                 m_durationTime = m_durationTime.Add(TimeSpan.FromMilliseconds(100));
-                this.Text = ("NetworkStatusMonitor.NET [Monitoring: " + string.Format("{0:00}:{1:00}:{2:00}", m_monitorTime.Hours, m_monitorTime.Minutes, m_monitorTime.Seconds) + "]");
+                this.Text = (Framework.Assembly.GetTitle() + " [Monitoring: " + string.Format("{0:00}:{1:00}:{2:00}", m_monitorTime.Hours, m_monitorTime.Minutes, m_monitorTime.Seconds) + "]");
 
                 if ((m_currentStatus != StatusTypes.Unknown) && (LogList.Items.Count > 0))
                 {
